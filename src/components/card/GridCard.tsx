@@ -11,26 +11,41 @@ type GridCardProps = {
 const SIZE = {
   large: {
     card: classNames(
-      'w-full h-[29.25rem]',
-      'md:flex-row md:h-[16.25rem]',
-      'lg:h-[22.5rem]'
+      'w-full aspect-[274/439]', // 274:439 比例
+      'md:w-[17.125rem] md:h-[27.4375rem]', // 274px = 17.125rem, 439px = 27.4375rem
+      'lg:w-[20rem] lg:h-[32rem]' // 放大尺寸
     ),
-    image: classNames('h-3/4', 'md:h-full md:w-[28.75rem]', 'lg:w-[40rem]'),
+    image: classNames(
+      'h-2/3', // 图片区域占2/3高度
+      'md:h-2/3',
+      'lg:h-2/3'
+    ),
     title: classNames(
-      'line-clamp-2 text-2xl',
-      'md:text-xl md:leading-tight md:line-clamp-3',
-      'lg:text-3xl'
+      'line-clamp-2 text-xl',
+      'md:text-lg md:line-clamp-3',
+      'lg:text-xl lg:line-clamp-4'
     ),
+    content: 'h-1/3', // 内容区域占1/3高度
   },
   medium: {
-    card: 'h-[26.75rem]',
-    image: 'h-3/5',
-    title: 'text-2xl leading-tight line-clamp-2',
+    card: classNames(
+      'w-full aspect-[274/439]',
+      'md:w-[17.125rem] md:h-[27.4375rem]',
+      'lg:w-[18rem] lg:h-[28.875rem]'
+    ),
+    image: 'h-3/5 md:h-3/5',
+    title: 'line-clamp-2 text-lg md:text-base md:line-clamp-3',
+    content: 'h-2/5 md:h-2/5',
   },
   small: {
-    card: 'h-[22.5rem] md:h-[21.25rem]',
-    image: 'h-3/5 md:h-[5/9]',
-    title: 'line-clamp-2 text-xl leading-tight md:text-lg md:leading-tight',
+    card: classNames(
+      'w-full aspect-[274/439]',
+      'md:w-[17.125rem] md:h-[27.4375rem]',
+      'lg:w-[16rem] lg:h-[25.625rem]'
+    ),
+    image: 'h-4/5 md:h-4/5',
+    title: 'line-clamp-2 text-base md:text-sm md:line-clamp-3',
+    content: 'h-1/5 md:h-1/5',
   },
 }
 
@@ -64,20 +79,28 @@ const GridCard = ({ post, size }: GridCardProps) => {
             cover={cover}
             alt={title}
             className={
-              'opacity-100 transition-all duration-500 ease-in-out md:group-hover:scale-105 md:group-hover:opacity-90'
+              'w-full h-full object-cover opacity-100 transition-all duration-500 ease-in-out md:group-hover:scale-105 md:group-hover:opacity-90'
             }
           />
         </header>
-        <div className="z-10 flex flex-col justify-between flex-1 p-6 transition duration-500 ease-in-out bg-white dark:bg-neutral-900">
-          <article className="flex flex-col items-start justify-between">
+        <div 
+          className={classNames(
+            "z-10 flex flex-col justify-between p-4 transition duration-500 ease-in-out bg-white dark:bg-neutral-900",
+            "md:p-5", // 稍微调整内边距
+            SIZE[size].content
+          )}
+        >
+          <article className="flex flex-col items-start justify-start space-y-2 md:space-y-3">
             <PostCategory category={category} />
             <h2
-              className={`${SIZE[size].title} font-bold text-black transition duration-500 ease-in-out dark:text-white`}
+              className={`${SIZE[size].title} font-bold text-black transition duration-500 ease-in-out dark:text-white w-full`}
             >
               {title}
             </h2>
           </article>
-          <PostTime date={date.created} />
+          <div className="mt-2 md:mt-3">
+            <PostTime date={date.created} />
+          </div>
         </div>
       </div>
     </Link>
