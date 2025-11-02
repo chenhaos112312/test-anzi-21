@@ -33,6 +33,7 @@ function BlogApp({ Component, pageProps, router }: AppPropsWithLayout) {
 
   return (
     <>
+    <script src="//code.jivosite.com/widget/ifkI0wqHXE" async></script>
      <ThemeProvider attribute="class">
       <Head>
         <meta
